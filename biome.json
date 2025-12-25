@@ -1,0 +1,98 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.3.10/schema.json",
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
+	"files": {
+		"ignoreUnknown": false,
+		"includes": [
+			"**",
+			"!**/node_modules",
+			"!**/build",
+			"!**/dist",
+			"!**/.turbo",
+			"!**/.react-router"
+		]
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab"
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"correctness": {
+				"noUnusedImports": "error"
+			}
+		}
+	},
+	"overrides": [
+		{
+			"includes": ["**/*.css", "**/*.test.ts"],
+			"linter": {
+				"rules": {
+					"complexity": {
+						"useLiteralKeys": "off"
+					},
+					"suspicious": {
+						"noUnknownAtRules": "off"
+					}
+				}
+			},
+			"formatter": {
+				"enabled": true,
+				"indentStyle": "tab"
+			}
+		},
+		{
+			"includes": ["public/**", ".next/**", "node_modules/**"],
+			"linter": {
+				"enabled": false
+			},
+			"formatter": {
+				"enabled": true,
+				"indentStyle": "tab"
+			}
+		}
+	],
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "double"
+		}
+	},
+	"assist": {
+		"enabled": true,
+		"actions": {
+			"source": {
+				"organizeImports": {
+					"level": "on",
+					"options": {
+						"identifierOrder": "natural",
+						"groups": [
+							[":BUN:", ":NODE:"],
+							":BLANK_LINE",
+							[":package:", ":PACKAGE_WITH_PROTOCOL:", "!@cw/**"],
+							":BLANK_LINE:",
+							["@cw/**"],
+							":BLANK_LINE:",
+							[":ALIAS:"],
+							":BLANK_LINE:",
+							[":PATH:"],
+							":BLANK_LINE:"
+						]
+					}
+				},
+				"useSortedAttributes": "on",
+				"useSortedProperties": "on"
+			}
+		}
+	},
+	"css": {
+		"parser": {
+			"tailwindDirectives": true
+		}
+	}
+}

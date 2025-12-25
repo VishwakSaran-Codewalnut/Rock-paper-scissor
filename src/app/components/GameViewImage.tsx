@@ -1,21 +1,21 @@
 import Image from "next/image";
 
 type GameViewImageProps = {
-  image: string;
+	image: string;
 };
 
 function GameViewImage({ image }: GameViewImageProps) {
-  return (
-    <Image
-      src={image}
-      alt="player"
-      width={160}
-      height={100}
-      quality={100}
-      priority
-      className="sm:w-[280px] sm:h-[130px] md:w-[330px] md:h-[160px] lg:w-[380px] lg:h-[180px]"
-    />
-  );
+	return (
+		<Image
+			alt="player"
+			className="sm:w-[280px] sm:h-[130px] md:w-[330px] md:h-[160px] lg:w-[380px] lg:h-[180px]"
+			height={100}
+			priority
+			quality={100}
+			src={image}
+			width={160}
+		/>
+	);
 }
 
 export default GameViewImage;
