@@ -1,23 +1,27 @@
 "use client";
 
-import { useGameContext } from "../context/gameContext";
+import { useGameStore } from "../../store/useGameStore";
 import QuestionImage from "./QuestionImage";
 import GameViewImage from "./GameViewImage";
 
 function GameView() {
-  const { state } = useGameContext();
+  const {
+    isPlayerSelecting,
+    currentPlayerChoiceImage,
+    currentComputerChoiceImage,
+  } = useGameStore();
 
   return (
     <div className="w-full flex justify-between items-center mt-8 lg:mt-2">
-      {state.isClick ? (
+      {isPlayerSelecting ? (
         <>
           <QuestionImage />
           <QuestionImage />
         </>
       ) : (
         <>
-          <GameViewImage image={state.userImage} />
-          <GameViewImage image={state.pcImage} />
+          <GameViewImage image={currentPlayerChoiceImage} />
+          <GameViewImage image={currentComputerChoiceImage} />
         </>
       )}
     </div>
