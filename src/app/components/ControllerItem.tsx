@@ -2,12 +2,15 @@ import Image from "next/image";
 
 type ControllerItemProps = {
   path: string;
+  label: string;
   click: () => void;
 };
 
-function ControllerItem({ path, click }: ControllerItemProps) {
+function ControllerItem({ path, label, click }: ControllerItemProps) {
   return (
     <Image
+      role="button"
+      aria-label={label}
       onClick={click}
       src={path}
       width={100}

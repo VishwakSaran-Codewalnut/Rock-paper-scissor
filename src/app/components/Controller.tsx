@@ -36,9 +36,9 @@ function Controller({ pcMove }: ControllerProps) {
   };
   return (
     <div className="w-full mt-28 md:mt-12 absolute bottom-24 sm:bottom-16 md:bottom-10 flex gap-4 md:gap-8 items-center justify-center z-10">
-      <ControllerItem click={rockClick} path="/images/rock-user.png" />
-      <ControllerItem click={paperClick} path="/images/paper-user.png" />
-      <ControllerItem click={scissorClick} path="/images/scissors-user.png" />
+      <ControllerItem label="Rock" click={rockClick} path="/images/rock-user.png" />
+      <ControllerItem label="Paper" click={paperClick} path="/images/paper-user.png" />
+      <ControllerItem label="Scissors" click={scissorClick} path="/images/scissors-user.png" />
     </div>
   );
 }
