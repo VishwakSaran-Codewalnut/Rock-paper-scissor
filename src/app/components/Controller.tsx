@@ -14,12 +14,10 @@ function Controller({ pcMove }: ControllerProps) {
   const dispatcher = (key: string, path: string) => {
     dispatch({ type: "ACTIVE_IS_CLICK" });
     // call pcMove to move the pc by the random chose
-    setTimeout(() => {
-      dispatch({ type: "SET_USER_SYMBOL", payload: key });
-      dispatch({ type: "SET_USER_IMAGE", payload: path });
-      pcMove();
-      dispatch({ type: "INACTIVE_IS_CLICK" });
-    }, 1000);
+    dispatch({ type: "SET_USER_SYMBOL", payload: key });
+    dispatch({ type: "SET_USER_IMAGE", payload: path });
+    pcMove();
+    dispatch({ type: "INACTIVE_IS_CLICK" });
   };
 
   // rock, scissor and paper click handler
@@ -36,9 +34,9 @@ function Controller({ pcMove }: ControllerProps) {
   };
   return (
     <div className="w-full mt-28 md:mt-12 absolute bottom-24 sm:bottom-16 md:bottom-10 flex gap-4 md:gap-8 items-center justify-center z-10">
-      <ControllerItem click={rockClick} path="/images/rock-user.png" />
-      <ControllerItem click={paperClick} path="/images/paper-user.png" />
-      <ControllerItem click={scissorClick} path="/images/scissors-user.png" />
+      <ControllerItem ariaLabel="Rock" onClick={rockClick} iconPath="/images/rock-user.png" />
+      <ControllerItem ariaLabel="Paper" onClick={paperClick} iconPath="/images/paper-user.png" />
+      <ControllerItem ariaLabel="Scissors" onClick={scissorClick} iconPath="/images/scissors-user.png" />
     </div>
   );
 }

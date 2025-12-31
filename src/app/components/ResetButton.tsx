@@ -3,7 +3,7 @@
 import { Howl } from "howler";
 import { useGameContext } from "../context/gameContext";
 
-function ButtonBox() {
+function ResetButton() {
   const { dispatch } = useGameContext();
 
   const sound = new Howl({
@@ -16,7 +16,7 @@ function ButtonBox() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row gap-2 md:gap-4 absolute md:left-8 md:top-8 top-48 left-8 z-10">
+    <div className="flex flex-col md:flex-row gap-2 md:gap-4 z-10">
       <button
         type="button"
         onClick={resetGame}
@@ -28,7 +28,7 @@ function ButtonBox() {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="absolute w-6 md:w-8 h-6 md:h-8 stroke-white"
+          className="w-6 md:w-8 h-6 md:h-8 stroke-white"
         >
           <path
             strokeLinecap="round"
@@ -41,4 +41,4 @@ function ButtonBox() {
   );
 }
 
-export default ButtonBox;
+export default ResetButton;
