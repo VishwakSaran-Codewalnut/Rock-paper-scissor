@@ -7,14 +7,19 @@ type GameActionProps = {
 
 function GameAction({ iconPath, onActionClick }: GameActionProps) {
   return (
-    <Image
+    <button
       onClick={onActionClick}
-      src={iconPath}
-      width={100}
-      height={100}
-      alt="Game Action"
-      className="cursor-pointer sm:w-[120px] sm:h-[120px]"
-    />
+      className="cursor-pointer sm:w-[120px] sm:h-[120px] p-0 border-none bg-transparent"
+      aria-label="Game Action"
+    >
+      <Image
+        src={iconPath}
+        width={100}
+        height={100}
+        alt="Game Action"
+        className="w-[100px] h-[100px]"
+      />
+    </button>
   );
 }
 

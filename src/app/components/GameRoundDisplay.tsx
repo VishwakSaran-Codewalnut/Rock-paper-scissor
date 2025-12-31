@@ -6,7 +6,7 @@ type RoundProps = {
   currentRoundNumber: number;
 };
 
-function Round({ currentRoundNumber }: RoundProps) {
+function GameRoundDisplay({ currentRoundNumber }: RoundProps) {
   const [animation, setAnimation] = useState(false);
 
   // handle round number effect
@@ -21,15 +21,15 @@ function Round({ currentRoundNumber }: RoundProps) {
 
   return (
     <div className="w-full flex items-center justify-center flex-col gap-2 py-3">
-      <span className="text-xl text-primary">Round</span>
-      <span
+      <p className="text-xl text-primary">Round</p>
+      <p
         className={`text-6xl lg:text-7xl text-primary ${animation && "animate-ping"
           }`}
       >
         {currentRoundNumber}
-      </span>
+      </p>
     </div>
   );
 }
 
-export default Round;
+export default GameRoundDisplay;

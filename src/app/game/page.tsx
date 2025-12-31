@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import ScoreBoard from "../components/ScoreBoard";
-import Round from "../components/Round";
+import GameRoundDisplay from "../components/GameRoundDisplay";
 import GameView from "../components/GameView";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import GameResetButton from "../components/GameResetButton";
@@ -43,9 +43,9 @@ function GamePage() {
 		// condition for win the user
 		// and else pc is winner
 		if (
-			(user === "rock" && pc === "scissor") ||
+			(user === "rock" && pc === "scissors") ||
 			(user === "paper" && pc === "rock") ||
-			(user === "scissor" && pc === "paper")
+			(user === "scissors" && pc === "paper")
 		) {
 			return incrementPlayerScore();
 		}
@@ -62,13 +62,18 @@ function GamePage() {
 	}, [currentRoundNumber]);
 
 	return (
-		<div className="w-full min-h-screen bg-primary flex flex-col select-none relative">
-			<ScoreBoard />
-			<Round currentRoundNumber={currentRoundNumber} />
-			<GameView />
-			<GameControls onComputerMove={handleComputerMove} />
-			<ThemeToggleButton />
-			<GameResetButton />
+		<div className="w-full min-h-screen bg-primary flex flex-col select-none relative p-4">
+			<div className="w-full flex justify-between items-center mb-4">
+				<GameResetButton />
+				<ThemeToggleButton />
+			</div>
+			<div className="flex-1 flex flex-col items-center justify-start gap-8">
+				<ScoreBoard />
+				<GameRoundDisplay currentRoundNumber={currentRoundNumber} />
+				<GameView />
+				<GameControls onComputerMove={handleComputerMove} />
+			</div>
+
 			<WinCelebration />
 		</div>
 	);

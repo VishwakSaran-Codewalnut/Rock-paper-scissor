@@ -25,23 +25,30 @@ function GameControls({ onComputerMove }: GameControlsProps) {
     }, 1000);
   };
 
-  const handleRockClick = () => {
-    handlePlayerMove("rock", GAME_IMAGES.ROCK_USER);
-  };
+  const handleMoveClick = (move: "rock" | "scissors" | "paper") => {
+    const images = {
+      rock: GAME_IMAGES.ROCK_USER,
+      scissors: GAME_IMAGES.SCISSOR_USER,
+      paper: GAME_IMAGES.PAPER_USER,
+    };
 
-  const handleScissorClick = () => {
-    handlePlayerMove("scissor", GAME_IMAGES.SCISSOR_USER);
-  };
-
-  const handlePaperClick = () => {
-    handlePlayerMove("paper", GAME_IMAGES.PAPER_USER);
+    handlePlayerMove(move, images[move]);
   };
 
   return (
-    <div className="w-full mt-28 md:mt-12 absolute bottom-24 sm:bottom-16 md:bottom-10 flex gap-4 md:gap-8 items-center justify-center z-10">
-      <GameAction onActionClick={handleRockClick} iconPath={GAME_IMAGES.ROCK_ICON} />
-      <GameAction onActionClick={handlePaperClick} iconPath={GAME_IMAGES.PAPER_ICON} />
-      <GameAction onActionClick={handleScissorClick} iconPath={GAME_IMAGES.SCISSOR_ICON} />
+    <div className="w-full mt-10 mb-10 flex gap-4 md:gap-8 items-center justify-center z-10">
+      <GameAction
+        onActionClick={() => handleMoveClick("rock")}
+        iconPath={GAME_IMAGES.ROCK_ICON}
+      />
+      <GameAction
+        onActionClick={() => handleMoveClick("paper")}
+        iconPath={GAME_IMAGES.PAPER_ICON}
+      />
+      <GameAction
+        onActionClick={() => handleMoveClick("scissors")}
+        iconPath={GAME_IMAGES.SCISSOR_ICON}
+      />
     </div>
   );
 }
