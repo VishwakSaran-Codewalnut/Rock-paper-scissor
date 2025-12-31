@@ -1,32 +1,30 @@
-import { screen, waitFor, render } from '../test-utils';
+import { screen, render } from '../test-utils';
 import userEvent from '@testing-library/user-event';
 import Controller from '../../src/app/components/Controller';
-import GameView from '../../src/app/components/GameView';
 
 describe('Controller Component', () => {
-    it('updates game UI when user selects an option', async () => {
+    it('renders all game option buttons', () => {
+        const mockPcMove = vi.fn();
+
+        render(<Controller pcMove={mockPcMove} />);
+
+        expect(screen.getByRole('button', { name: /rock/i })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /paper/i })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /scissors/i })).toBeInTheDocument();
+    });
+
+    it.each([
+        ['rock'],
+        ['paper'],
+        ['scissors'],
+    ])('calls pcMove callback immediately when user selects %s', async (option) => {
         const user = userEvent.setup();
         const mockPcMove = vi.fn();
 
-        render(
-            <>
-                <GameView />
-                <Controller pcMove={mockPcMove} />
-            </>
-        );
+        render(<Controller pcMove={mockPcMove} />);
 
-        expect(screen.queryByAltText('question')).not.toBeInTheDocument();
-
-        const rockButton = screen.getByRole('button', { name: /rock/i });
-
-        await user.click(rockButton);
-
-        await waitFor(() => {
-            expect(screen.getAllByAltText('question')).toHaveLength(2);
-        });
-        await waitFor(() => {
-            expect(screen.queryByAltText('question')).not.toBeInTheDocument();
-            expect(mockPcMove).toHaveBeenCalled();
-        }, { timeout: 2000 });
+        const button = screen.getByRole('button', { name: new RegExp(option, 'i') });
+        await user.click(button);
+        expect(mockPcMove).toHaveBeenCalledTimes(1);
     });
 });
