@@ -1,68 +1,82 @@
 "use client";
 
 import { useEffect } from "react";
-import Scores from "../components/Scores";
-import Round from "../components/Round";
+import ScoreBoard from "../components/ScoreBoard";
+import GameRoundDisplay from "../components/GameRoundDisplay";
 import GameView from "../components/GameView";
-import ToggleButton from "../components/ToggleButton";
-import ButtonBox from "../components/ResetButton";
-import Controller from "../components/Controller";
-import { randomPcMove } from "../../../utils/randomPcMove";
-import { useGameContext } from "../context/gameContext";
-import BombAnimation from "../components/BombAnimation";
+import ThemeToggleButton from "../components/ThemeToggleButton";
+import GameResetButton from "../components/GameResetButton";
+import GameControls from "../components/GameControls";
+import { getRandomComputerMove } from "../../../utils/getRandomComputerMove";
+import WinCelebration from "../components/WinCelebration";
+import { useGameStore } from "../../store/useGameStore";
 
 function GamePage() {
-  const { state, dispatch } = useGameContext();
+	const {
+		currentPlayerChoice,
+		currentComputerChoice,
+		currentRoundNumber,
+		setComputerChoiceImage,
+		setComputerChoice,
+		incrementRound,
+		incrementDraws,
+		incrementPlayerScore,
+		incrementComputerScore,
+	} = useGameStore();
 
-  // handle pc Move after user clicked on controller button
-  const pcMoveHandler = () => {
-    const { title, image } = randomPcMove();
-    // set in state
-    dispatch({ type: "SET_PC_IMAGE", payload: image });
-    dispatch({ type: "SET_PC_SYMBOL", payload: title });
-    dispatch({ type: "INCREMENT_ROUND" });
-  };
+	// handle pc Move after user clicked on controller button
+	const handleComputerMove = () => {
+		const { title, image } = getRandomComputerMove();
+		// set in state
+		setComputerChoiceImage(image);
+		setComputerChoice(title);
+		incrementRound();
+	};
 
-  // point the winner after each round
-  const determineWinner = (user: string, pc: string) => {
-    // check equal user and pc
-    if (user === pc) {
-      return dispatch({ type: "INCREMENT_GAME_TIES" });
-    }
+	// point the winner after each round
+	const determineWinner = (user: string, pc: string) => {
+		// check equal user and pc
+		if (user === pc) {
+			return incrementDraws();
+		}
 
-    // condition for win the user
-    // and else pc is winner
-    if (
-      (user === "rock" && pc === "scissor") ||
-      (user === "paper" && pc === "rock") ||
-      (user === "scissor" && pc === "paper")
-    ) {
-      return dispatch({ type: "INCREMENT_USER_SCORE" });
-    }
+		// condition for win the user
+		// and else pc is winner
+		if (
+			(user === "rock" && pc === "scissors") ||
+			(user === "paper" && pc === "rock") ||
+			(user === "scissors" && pc === "paper")
+		) {
+			return incrementPlayerScore();
+		}
 
-    return dispatch({ type: "INCREMENT_PC_SCORE" });
-  };
+		return incrementComputerScore();
+	};
 
-  // every change user and pc selection call determineWinner function
-  useEffect(() => {
-    const { userSelect, pcSelect } = state;
-    if (userSelect && pcSelect) {
-      determineWinner(userSelect, pcSelect);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.roundCounter]);
+	// every change user and pc selection call determineWinner function
+	useEffect(() => {
+		if (currentPlayerChoice && currentComputerChoice) {
+			determineWinner(currentPlayerChoice, currentComputerChoice);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [currentRoundNumber]);
 
-  return (
-    <div className="w-full min-h-screen bg-primary flex flex-col select-none relative">
-      <Scores />
-      <Round round={state.roundCounter} />
-      <GameView />
-      <Controller pcMove={pcMoveHandler} />
-      <ToggleButton />
-      <ButtonBox />
-      <BombAnimation />
-    </div>
-  );
+	return (
+		<div className="w-full min-h-screen bg-primary flex flex-col select-none relative p-4">
+			<div className="w-full flex justify-between items-center mb-4">
+				<GameResetButton />
+				<ThemeToggleButton />
+			</div>
+			<div className="flex-1 flex flex-col items-center justify-start gap-8">
+				<ScoreBoard />
+				<GameRoundDisplay currentRoundNumber={currentRoundNumber} />
+				<GameView />
+				<GameControls onComputerMove={handleComputerMove} />
+			</div>
+
+			<WinCelebration />
+		</div>
+	);
 }
 
 export default GamePage;

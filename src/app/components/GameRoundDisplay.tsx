@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react";
 
 type RoundProps = {
-  round: number;
+  currentRoundNumber: number;
 };
 
-function Round({ round }: RoundProps) {
+function GameRoundDisplay({ currentRoundNumber }: RoundProps) {
   const [animation, setAnimation] = useState(false);
 
   // handle round number effect
@@ -17,20 +17,19 @@ function Round({ round }: RoundProps) {
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [round]);
+  }, [currentRoundNumber]);
 
   return (
     <div className="w-full flex items-center justify-center flex-col gap-2 py-3">
-      <span className="text-xl text-primary">Round</span>
-      <span
-        className={`text-6xl lg:text-7xl text-primary ${
-          animation && "animate-ping"
-        }`}
+      <p className="text-xl text-primary">Round</p>
+      <p
+        className={`text-6xl lg:text-7xl text-primary ${animation && "animate-ping"
+          }`}
       >
-        {round}
-      </span>
+        {currentRoundNumber}
+      </p>
     </div>
   );
 }
 
-export default Round;
+export default GameRoundDisplay;
