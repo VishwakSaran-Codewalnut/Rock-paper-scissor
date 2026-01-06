@@ -1,7 +1,7 @@
 "use client";
 
 import { useGameStore } from "../../store/useGameStore";
-import GameAction from "./GameAction";
+import GameActionButton from "./GameActionButton";
 import { GAME_IMAGES } from "../../../utils/constants/gameConstants";
 
 type GameControlsProps = {
@@ -37,15 +37,15 @@ function GameControls({ onComputerMove }: GameControlsProps) {
 
   return (
     <div className="w-full mt-10 mb-10 flex gap-4 md:gap-8 items-center justify-center z-10">
-      <GameAction
+      <GameActionButton
         onActionClick={() => handleMoveClick("rock")}
         iconPath={GAME_IMAGES.ROCK_ICON}
       />
-      <GameAction
+      <GameActionButton
         onActionClick={() => handleMoveClick("paper")}
         iconPath={GAME_IMAGES.PAPER_ICON}
       />
-      <GameAction
+      <GameActionButton
         onActionClick={() => handleMoveClick("scissors")}
         iconPath={GAME_IMAGES.SCISSOR_ICON}
       />

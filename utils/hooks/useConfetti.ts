@@ -113,21 +113,19 @@ export const useConfetti = (
     };
 
     useEffect(() => {
+        let timer: NodeJS.Timeout;
+
         if (shouldCelebrate) {
             startConfetti();
-            const timer = setTimeout(stopConfetti, GAME_CONSTANTS.CONFETTI_DURATION);
-            return () => clearTimeout(timer);
+            timer = setTimeout(stopConfetti, GAME_CONSTANTS.CONFETTI_DURATION);
         }
-        stopConfetti();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [shouldCelebrate]);
 
-    useEffect(() => {
         return () => {
+            if (timer) clearTimeout(timer);
             stopConfetti();
             if (animationTimer.current) cancelAnimationFrame(animationTimer.current);
             particles.current = [];
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [shouldCelebrate]);
 };
